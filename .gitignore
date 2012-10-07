@@ -11,6 +11,17 @@
 # generated files
 bin/
 gen/
+build.xml
 
 # Local configuration file (sdk path, etc)
 local.properties
+
+
+# project files:
+#    kdevelop4
+.kdev4
+*.kdev4
+
+
+# temportal backup files:
+*~
