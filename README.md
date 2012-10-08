@@ -26,4 +26,4 @@ Planned Features:
 
 License
 =====
-Currently project is licensed under terms of GPLv3 license, but there is no final decision yet.
+This project is licensed under terms of GPLv3 license.
