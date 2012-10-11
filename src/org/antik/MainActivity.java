@@ -50,7 +50,7 @@ public class MainActivity extends Activity {
 
         m_startStopButton.setOnClickListener(new StartStopButtonListener());
 
-        TextView ipText = (TextView) findViewById(R.id.yourIpText);
+        TextView ipText = (TextView) findViewById(R.id.ipText);
         ipText.setText(Antik.getLocalIpAddress());
 
         manageStartStopButtonState();
