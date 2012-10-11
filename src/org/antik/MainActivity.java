@@ -37,7 +37,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
-    private static final String TAG = "Antik";
 
     // widgets
     Button m_startStopButton;
@@ -46,7 +45,7 @@ public class MainActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
-        Log.e(TAG, "Antik MainActivity created");
+        Antik.log("Antik MainActivity created");
         m_startStopButton = (Button) findViewById(R.id.startStopServerButton);
 
         m_startStopButton.setOnClickListener(new StartStopButtonListener());
@@ -80,11 +79,11 @@ public class MainActivity extends Activity {
         {
           case R.id.startStopServerButton:
             if (!isAntikServerServiceRunning()) {
-              Log.d(TAG, "onClick startStopServerButton: stopping service");
+              Antik.log("onClick startStopServerButton: stopping service");
               startAntikServerService();
               manageStartStopButtonState();
             } else {
-              Log.d(TAG, "onClick startStopServerButton: starting service");
+              Antik.log("onClick startStopServerButton: starting service");
               stopAntikServerService();
               manageStartStopButtonState();
             }
