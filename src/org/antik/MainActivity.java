@@ -21,8 +21,12 @@
 
 package org.antik;
 
+// java
+import java.io.File;
+
 // android
 import android.os.Bundle;
+import android.os.Environment;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
@@ -37,7 +41,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
-
     // widgets
     Button m_startStopButton;
 
@@ -54,6 +57,17 @@ public class MainActivity extends Activity {
         ipText.setText(Antik.getLocalIpAddress());
 
         manageStartStopButtonState();
+
+        Button deployButton = (Button) findViewById(R.id.startStopDeplymentButton);
+        deployButton.setOnClickListener(new OnClickListener() {
+          public void onClick(View src) {
+            new Measure("Unzipping WebRoot", new Measureable() {
+              public void run() {
+                unzipAsset();
+              }
+            }).start();
+          }
+        });
     }
 
     @Override
@@ -113,4 +127,17 @@ public class MainActivity extends Activity {
     }
 
 
+    // --- unzip test --- //
+    private void unzipAsset()
+    {
+      try {
+        String basePath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "antik";
+        File webrootZipTarget = new File(basePath + File.separator + "webroot.zip");
+        File webrootUnzipDir  = new File(basePath); /*  + File.separator + "webroot" */
+
+        Antik.ZipUtils.unzipAsset(this, "webroot" + File.separator + "webroot.jet", webrootZipTarget, webrootUnzipDir);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
 }

@@ -14,6 +14,15 @@
         android:layout_alignParentRight="true"
         android:text="@string/start_server" />
 
+    <Button
+        android:id="@+id/startStopDeplymentButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/startStopServerButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:text="Deploy resources" />
+
     <TextView
         android:id="@+id/ipText"
         android:layout_width="fill_parent"

@@ -21,7 +21,16 @@ local.properties
 #    kdevelop4
 .kdev4
 *.kdev4
+#    eclipse
+.classpath
+.project
+.settings
 
 
 # temportal backup files:
 *~
+
+
+# zip archive of webroot in assets can be created manually from webroot dir into the project
+# or you can use build-webroot.sh script for this task
+assets/webroot
