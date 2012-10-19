@@ -22,6 +22,8 @@
 package org.antik;
 
 // android imports
+import java.io.File;
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -35,6 +37,7 @@ import android.util.Log;
 // jetty  imports
 import org.eclipse.jetty.server.*;
 import org.eclipse.jetty.servlet.*;
+import org.eclipse.jetty.server.handler.*;
 
 import org.antik.webui.filetreetable.*;
 // wedbav imports
@@ -61,16 +64,7 @@ public class AntikServerService extends Service {
         // initialize service here - read config, etc
         try {
             _webServer = new Server(8088);
-
-
-            ServletContextHandler servletContext = new ServletContextHandler(ServletContextHandler.SESSIONS);
-            servletContext.setContextPath("/");
-
-
-            servletContext.addServlet(new ServletHolder(new AntikWebInterfaceServlet()) , "/");
-            servletContext.addServlet(new ServletHolder(new FileTreeExample()) , "/fs/");
-
-            _webServer.setHandler(servletContext);
+            _webServer.setHandler(createHandler());
 
         } catch (Exception e) {
             // TODO Auto-generated catch block
@@ -117,5 +111,25 @@ public class AntikServerService extends Service {
         notification.flags = Notification.FLAG_ONGOING_EVENT | Notification.FLAG_NO_CLEAR;
         notification.setLatestEventInfo(this, getString(R.string.app_name), "http://" + Antik.getLocalIpAddress() + ":8088" , contentIntent);
         _nm.notify(NOTIFICATION_ID, notification);
+    }
+
+    public Handler createHandler() {
+      AntikResourceHandler resourceHandler = new AntikResourceHandler();
+      resourceHandler.setDirectoriesListed(false);
+      resourceHandler.setWelcomeFiles(new String[]{});
+      resourceHandler.setResourceBase(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "antik" + File.separator + "webroot" + File.separator);
+
+      ServletContextHandler servletContext = new ServletContextHandler(ServletContextHandler.SESSIONS | ServletContextHandler.NO_SECURITY);
+      servletContext.setContextPath("/");
+      servletContext.addServlet(new ServletHolder(new AntikWebInterfaceServlet()) , "/*");
+      servletContext.addServlet(new ServletHolder(new FileTreeExample()) , "/fs/*");
+
+
+      HandlerList handlersCollection = new HandlerList();
+      handlersCollection.addHandler(servletContext);
+      handlersCollection.addHandler(resourceHandler);
+      handlersCollection.addHandler(new DefaultHandler());
+
+      return handlersCollection;
     }
 }

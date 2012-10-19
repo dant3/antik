@@ -29,8 +29,8 @@ public class FileTreeTableNode extends WTreeTableNode {
      * Construct a new node for the given file.
      */
     public FileTreeTableNode(File path) {
-//        super("", createIcon(path));
-        super("");
+        super("", createIcon(path));
+        //super("");
         path_ = path;
 
         getLabel().setTextFormat(TextFormat.PlainText);
@@ -80,9 +80,9 @@ public class FileTreeTableNode extends WTreeTableNode {
     private static WIconPair createIcon(File path) {
         if (path.exists() && path.isDirectory())
             return new WIconPair("pics/yellow-folder-closed.png",
-                    "pics/yellow-folder-open.png", false);
+                "pics/yellow-folder-open.png", false);
         else
             return new WIconPair("pics/document.png",
-                    "pics/yellow-folder-open.png", false);
+                "pics/yellow-folder-open.png", false);
     }
 }
